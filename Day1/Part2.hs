@@ -31,12 +31,20 @@ patternIndicesR x =
 firstDigit :: String -> String
 firstDigit x = snd $ head $ quicksort' (\(a,b) (c,d) -> compare a c) $ patternIndicesL x
 
+-- | added after the fact, this version of firstDigit doesn't use quicksort (made the code take forever)
+firstDigit' :: String -> String
+firstDigit' x = snd $ foldl (\(a,b) (c,d) -> if a < c then (a,b) else (c,d)) (1000, "") $ patternIndicesL x
+
 lastDigit :: String -> String
 lastDigit x = snd $ head $ quicksort' (\(a,b) (c,d) -> compare a c) $ patternIndicesR x
+
+-- | same as firstDigit'
+lastDigit' :: String -> String
+lastDigit' x = snd $ foldl (\(a,b) (c,d) -> if a < c then (a,b) else (c,d)) (1000, "") $ patternIndicesR x
 
 main :: IO ()
 main = do
     input <- readFile "Day1/input.txt"
     let lines = collectGroups input '\n'
-    let calibration = sum $ map (getDigit . (\x -> firstDigit x ++ lastDigit x)) lines
+    let calibration = sum $ map (getDigit . (\x -> firstDigit' x ++ lastDigit' x)) lines
     print calibration
