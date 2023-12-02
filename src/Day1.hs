@@ -1,6 +1,7 @@
 module Day1 (part1, part2) where
 import Common.ArrayUtil
 import Data.Char
+import Data.Bifunctor (second)
 
 
 -- Main Methods
@@ -36,13 +37,13 @@ patternToDigit x = snd $ head $ filter (\(a,b) -> a == x) patterns
 patternIndicesL :: String -> [(Int, String)]
 patternIndicesL x =
     let patIndices = indicesL (map fst patterns) x
-    in map (\(a,b) -> (a, patternToDigit b)) patIndices
+    in map (second patternToDigit) patIndices
     
 
 patternIndicesR :: String -> [(Int, String)]
 patternIndicesR x = 
     let patIndices = indicesR (map fst patterns) x
-    in map (\(a,b) -> (a, patternToDigit b)) patIndices
+    in map (second patternToDigit) patIndices
 
 firstDigit :: String -> String
 firstDigit x = snd $ head $ quicksort' (\(a,b) (c,d) -> compare a c) $ patternIndicesL x
