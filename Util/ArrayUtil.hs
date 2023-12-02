@@ -38,6 +38,34 @@ indexOf x y
     | otherwise = let index = indexOf x (tail y)
     in if index == -1 then -1 else index + 1
 
+-- | This function finds every index at which a pattern occurs in a list.
+--   It takes two arguments, the pattern and the array, respectively.
+--   If the pattern does not exist in the list, the function will return an empty list.
+indexesOf :: (Eq a) => [a] -> [a] -> [Int]
+indexesOf [] _ = []
+indexesOf _ [] = []
+indexesOf x y
+    | indexOf x y == -1 = []
+    | otherwise = indexOf x y : indexesOf x (drop (indexOf x y + 1) y)
+
+-- | This function replaces the first instance of a pattern in a list with another pattern.
+--   It takes three arguments, the pattern to replace, the pattern to replace it with, and the list to replace it in, respectively.
+--   If the pattern to replace does not exist in the list, the function will return the list unchanged.
+replaceFirst :: (Eq a) => [a] -> [a] -> [a] -> [a]
+replaceFirst _ _ [] = []
+replaceFirst x y z
+    | indexOf x z == -1 = z
+    | otherwise = take (indexOf x z) z ++ y ++ drop (indexOf x z + length x) z
+
+-- | This function replaces every instance of a pattern in a list with another pattern.
+--   It takes three arguments, the pattern to replace, the pattern to replace it with, and the list to replace it in, respectively.
+--   If the pattern to replace does not exist in the list, the function will return the list unchanged.
+replaceAll :: (Eq a) => [a] -> [a] -> [a] -> [a]
+replaceAll _ _ [] = []
+replaceAll x y z
+    | indexOf x z == -1 = z
+    | otherwise = replaceAll x y $ replaceFirst x y z
+
 -- | This function finds the earliest index of each pattern for a list of given patterns.
 --   It takes two arguments, the list of patterns and the list to search through, respectively.
 --   It returns the patterns and their indices as tuples in a list, and if a pattern does not exist it has an index of -1.
