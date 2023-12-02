@@ -35,6 +35,7 @@ library
         megaparsec ^>=9.3.0
     other-modules:
         Common.ArrayUtil
+        Common.ParseUtil
     hs-source-dirs: src
     default-language: GHC2021
 
