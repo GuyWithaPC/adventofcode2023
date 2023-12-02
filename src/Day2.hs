@@ -1,5 +1,23 @@
-module Day2.Util where
-import Util.ArrayUtil
+module Day2 (part1, part2) where
+import Common.ArrayUtil
+
+-- Main Methods
+
+part1 :: String -> Int
+part1 input =
+    let subsets = createSubsets input
+        games = zip [1..] (mapGames subsets)
+        possibleGames = sum $ map fst $ filter (\x -> isPossible (snd x) gameBag) games
+        in possibleGames
+
+part2 :: String -> Int
+part2 input =
+    let subsets = createSubsets input
+        games = mapGames subsets
+        power = sum $ map getPower games
+        in power
+
+-- Utility
 
 -- grabs and reverses a number based on a given index (coming from the right) in a string
 grabNumberAtR :: Int -> String -> Int
@@ -34,3 +52,23 @@ mapGames x = mapGame (head x) : mapGames (tail x)
 createSubsets :: String -> [[String]]
 createSubsets [] = []
 createSubsets x = map ((`collectGroups` ';') . drop' 2 . dropWhile (/= ':')) $ collectGroups x '\n'
+
+-- Part 1
+
+gameBag = (12, 13, 14)
+
+isPossible :: [(Int, Int, Int)] -> (Int, Int, Int) -> Bool
+isPossible [] _ = True
+isPossible x bag =
+    let (r, g, b) = head x
+        (br, bg, bb) = bag
+        in not (r > br || g > bg || b > bb) && isPossible (tail x) bag
+
+-- Part 2
+
+getPower :: [(Int, Int, Int)] -> Int
+getPower [] = 0
+getPower x =
+    let minimums = foldl (\(a,b,c) (d,e,f) -> (max a d,max b e,max c f)) (0,0,0) x
+        (r, g, b) = minimums
+    in r * g * b
