@@ -1,4 +1,4 @@
-module Util.ArrayUtil where
+module Common.ArrayUtil where
 
 -- | This function removes the first element of a list
 --   unless the list is empty in which case it remains unchanged.
