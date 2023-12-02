@@ -8,6 +8,12 @@ removeFirst x
     | null x = []
     | otherwise = tail x
 
+drop' :: Int -> [a] -> [a]
+drop' _ [] = []
+drop' n x
+    | n > 0 = drop' (n - 1) $ removeFirst x
+    | otherwise = x
+
 -- | This function collects a list into groups based on a separator.
 --   It takes two arguments, the list to collect and the separator, respectively.
 collectGroups :: (Eq a) => [a] -> a -> [[a]]
