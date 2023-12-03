@@ -3,19 +3,19 @@ import Common.ArrayUtil
 
 -- Main Methods
 
-part1 :: String -> Int
+part1 :: String -> IO Int
 part1 input =
     let subsets = createSubsets input
         games = zip [1..] (mapGames subsets)
         possibleGames = sum $ map fst $ filter (\x -> isPossible (snd x) gameBag) games
-        in possibleGames
+        in do return possibleGames
 
-part2 :: String -> Int
+part2 :: String -> IO Int
 part2 input =
     let subsets = createSubsets input
         games = mapGames subsets
         power = sum $ map getPower games
-        in power
+        in do return power
 
 -- Utility
 

@@ -6,17 +6,17 @@ import Data.Bifunctor (second)
 
 -- Main Methods
 
-part1 :: String -> Int
+part1 :: String -> IO Int
 part1 input =
     let lines = collectGroups input '\n'
         calibration = sum $ map getDigit lines
-        in calibration
+        in do return calibration
 
-part2 :: String -> Int
+part2 :: String -> IO Int
 part2 input =
     let lines = collectGroups input '\n'
         calibration = sum $ map (getDigit . (\x -> firstDigit' x ++ lastDigit' x)) lines
-        in calibration
+        in do return calibration
 
 -- Part 1
 

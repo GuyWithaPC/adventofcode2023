@@ -1,26 +1,23 @@
 module Day3 (part1, part2) where
-import Common.ParseUtil
 import Common.ArrayUtil
-import Text.Megaparsec
-import Text.Megaparsec.Char.Lexer
-import Data.Void
 import Data.Char
-import Debug.Trace
+
+import System.Process
+import System.IO
 
 -- Main Methods
 
-part1 :: String -> Int
+part1 :: String -> IO Int
 part1 input =
     let symbolLocations = getAllSymbolLocations input
-    in sum $ concatMap (\l -> getPartNumbers 0 l symbolLocations) $ zip [0..] $ lines input
+    in do return $ sum $ concatMap (\l -> getPartNumbers 0 l symbolLocations) $ zip [0..] $ lines input
 
 
-part2 :: String -> Int
-part2 input = 0
-
--- Part 2 Helper Methods
-
-
+part2 :: String -> IO Int
+part2 input = do
+    (_, Just hout, _, _) <- createProcess (shell "python src/Python/Day3Part2.py") { std_out = CreatePipe }
+    output <- hGetContents hout
+    return (read output :: Int)
 
 -- Part 1 Helper Methods
 
@@ -40,7 +37,7 @@ checkPartNumber :: Int -> (Int,String) -> [[Bool]] -> (Int, Maybe Int)
 checkPartNumber start (lineNum, line) symbolLocations =
     if checkIsPartNumber start (lineNum, line) symbolLocations
         then let (num, end) = getInteger start line
-            in trace ("got part number " ++ show num) (end, Just num)
+            in (end, Just num)
         else (start + 1, Nothing)
 
 checkIsPartNumber :: Int -> (Int,String) -> [[Bool]] -> Bool

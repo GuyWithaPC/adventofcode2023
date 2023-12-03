@@ -7,15 +7,19 @@ import qualified Day1 as D1 (part1, part2)
 import qualified Day2 as D2 (part1, part2)
 import qualified Day3 as D3 (part1, part2)
 
+type DayFunction = String -> IO Int
+
 getDayInput :: Int -> IO String
 getDayInput i = readFile $ "input/day" ++ show i ++ ".txt"
 
-run :: (Show a) => Int -> [String -> a] -> IO ()
+run :: Int -> [DayFunction] -> IO ()
 run day [part1, part2] = do
     input <- getDayInput day
+    p1 <- part1 input
+    p2 <- part2 input
     putStrLn $ "Day " ++ show day ++ ":"
-    putStrLn $ "Part 1: " ++ show (part1 input)
-    putStrLn $ "Part 2: " ++ show (part2 input)
+    putStrLn $ "Part 1: " ++ show p1
+    putStrLn $ "Part 2: " ++ show p2
 
 main :: IO ()
 main = do
