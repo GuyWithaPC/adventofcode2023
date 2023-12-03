@@ -11,6 +11,9 @@ type Parser = Parsec Void String
 
 -- Consumers
 
+skipCharacters :: [Char] -> Parser ()
+skipCharacters = skipMany . choice . map char
+
 skipWhitespace :: Parser ()
 skipWhitespace = skipMany $ choice [char ' ', char '\t']
 
