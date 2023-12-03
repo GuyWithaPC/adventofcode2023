@@ -1,5 +1,6 @@
 module Day3 (part1, part2) where
 import Common.ArrayUtil
+import Common.PyUtil
 import Data.Char
 
 import System.Process
@@ -14,10 +15,7 @@ part1 input =
 
 
 part2 :: String -> IO Int
-part2 input = do
-    (_, Just hout, _, _) <- createProcess (shell "python src/Python/Day3Part2.py") { std_out = CreatePipe }
-    output <- hGetContents hout
-    return (read output :: Int)
+part2 _ = python "src/Python/Day3Part2.py"
 
 -- Part 1 Helper Methods
 
