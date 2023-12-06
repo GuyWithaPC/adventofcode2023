@@ -27,6 +27,7 @@ data-files:
     input/day2.txt,
     input/day3.txt,
     input/day4.txt,
+    input/day5.txt,
     input/day6.txt
 
 library
@@ -35,6 +36,7 @@ library
         Day2,
         Day3,
         Day4,
+        Day5,
         Day6
     build-depends:
         base ^>=4.17.2.0,
