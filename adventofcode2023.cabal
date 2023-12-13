@@ -33,7 +33,8 @@ data-files:
     input/day8.txt,
     input/day9.txt,
     input/day10.txt,
-    input/day11.txt
+    input/day11.txt,
+    input/day12.txt
 
 library
     exposed-modules:
@@ -47,7 +48,8 @@ library
         Day8,
         Day9,
         Day10,
-        Day11
+        Day11,
+        Day12
     build-depends:
         base ^>=4.17.2.0,
         containers ^>=0.6.7,

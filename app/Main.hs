@@ -14,6 +14,7 @@ import qualified Day8 as D8 (part1, part2)
 import qualified Day9 as D9 (part1, part2)
 import qualified Day10 as D10 (part1, part2)
 import qualified Day11 as D11 (part1, part2)
+import qualified Day12 as D12 (part1, part2)
 
 type DayFunction = String -> IO Int
 
@@ -59,4 +60,5 @@ days = DM.fromList [
     (8, [D8.part1, D8.part2]),
     (9, [D9.part1, D9.part2]),
     (10, [D10.part1, D10.part2]),
-    (11, [D11.part1, D11.part2])]
+    (11, [D11.part1, D11.part2]),
+    (12, [D12.part1, D12.part2])]
