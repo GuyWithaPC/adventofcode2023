@@ -15,7 +15,21 @@ part1 input = do
     return $ sum possibilities
 
 part2 :: String -> IO Int
-part2 input = return 0
+part2 input = do
+    lines <- case parse parseInput "" input of
+        Left e -> error $ errorBundlePretty e
+        Right l -> return l
+    let expandedLines = map expandLine lines
+        possibilities = map (\(line, x) -> trace ("working on line " ++ show line) uncurry numPossibilities x) (zip [1..] expandedLines)
+    return $ sum possibilities
+
+-- Part 2
+
+expandLine :: ([SpringState], [Int]) -> ([SpringState], [Int])
+expandLine (states, rules) =
+    let states' = init $ concat $ replicate 5 (states ++ [Unknown])
+        rules' = concat $ replicate 5 rules
+    in (states', rules')
 
 -- Part 1
 
